@@ -8,6 +8,9 @@ import play.api.mvc._
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future, Promise}
 
+import database.Connexion
+
+
 /**
  * This controller creates an `Action` that demonstrates how to write
  * simple asynchronous code in a controller. It uses a timer to
@@ -47,7 +50,7 @@ class AsyncController @Inject()(cc: ControllerComponents, actorSystem: ActorSyst
   }
   //  def count = Action { Ok(counter.nextCount().toString) }
 
-  def hello = Action  { Ok ("Hello World")
+  def hello = Action  { Ok (Connexion.listCompany.unsafeRunSync().mkString)
 
   }
 
