@@ -50,8 +50,13 @@ class AsyncController @Inject()(cc: ControllerComponents, actorSystem: ActorSyst
   }
   //  def count = Action { Ok(counter.nextCount().toString) }
 
-  def hello = Action  { Ok (Connexion.listCompany.unsafeRunSync().mkString)
+    def  hello = Action { Ok (Connexion.listCompany.unsafeRunSync().mkString)}
 
-  }
+    def  hellos = Action {
+      val departments =  Connexion.listDepartment.unsafeRunSync()
+      println(departments)
+      Ok (departments.mkString)}
+
+
 
 }
