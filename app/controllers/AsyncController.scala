@@ -66,9 +66,9 @@ class AsyncController @Inject()(cc: ControllerComponents, actorSystem: ActorSyst
   import play.api.libs.json.Json
 
   def createCompany = Action { request =>
-    val companys = request.body.asJson.get.as[Company]
-    println(companys)
-    Ok("")
+    val companys = request.body.asJson.get.as[Company] // Ca transore Json a company
+    val changed =  Connexion.insertCompany(companys).unsafeRunSync()
+    Ok(changed.toString)
   }
 }
 

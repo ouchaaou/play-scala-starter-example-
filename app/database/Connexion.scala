@@ -41,6 +41,11 @@ val xa = Transactor.fromDriverManager[IO](
       .transact(xa)
   }
 
+
+  // Insert Company
+  def insertCompany(comp:Company): IO[Int] =
+    sql"insert into company (id, name,age, address ,salary) values (${comp.id}, ${comp.name}, ${comp.age}, ${comp.addresse}, ${comp.salary})".update.run
+      .transact(xa)
 }
 
 
