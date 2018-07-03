@@ -9,6 +9,7 @@ import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future, Promise}
 
 import database.Connexion
+import models._
 
 
 /**
@@ -30,13 +31,13 @@ import database.Connexion
 class AsyncController @Inject()(cc: ControllerComponents, actorSystem: ActorSystem)(implicit exec: ExecutionContext) extends AbstractController(cc) {
 
   /**
-   * Creates an Action that returns a plain text message after a delay
-   * of 1 second.
-   *
-   * The configuration in the `routes` file means that this method
-   * will be called when the application receives a `GET` request with
-   * a path of `/message`.
-   */
+    * Creates an Action that returns a plain text message after a delay
+    * of 1 second.
+    *
+    * The configuration in the `routes` file means that this method
+    * will be called when the application receives a `GET` request with
+    * a path of `/message`.
+    */
   def message = Action.async {
     getFutureMessage(1.second).map { msg => Ok(msg) }
   }
@@ -48,15 +49,26 @@ class AsyncController @Inject()(cc: ControllerComponents, actorSystem: ActorSyst
     }(actorSystem.dispatcher) // run scheduled tasks using the actor system's dispatcher
     promise.future
   }
+
   //  def count = Action { Ok(counter.nextCount().toString) }
 
-    def  hello = Action { Ok (Connexion.listCompany.unsafeRunSync().mkString)}
+  def hello = Action {
+    Ok(Connexion.listCompany.unsafeRunSync().mkString)
+  }
 
-    def  hellos = Action {
-      val departments =  Connexion.listDepartment.unsafeRunSync()
-      println(departments)
-      Ok (departments.mkString)}
+  def hellos = Action {
+    val departments = Connexion.listDepartment.unsafeRunSync()
+    println(departments)
+    Ok(departments.mkString)
+  }
 
 
+  import play.api.libs.json.Json
 
+  def createCompany = Action { request =>
+    val companys = request.body.asJson.get.as[Company]
+    println(companys)
+    Ok("")
+  }
 }
+

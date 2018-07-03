@@ -14,3 +14,5 @@ GET     /assets/*file               controllers.Assets.versioned(file)
 
 GET  /hello               controllers.AsyncController.hello
 GET  /hellos               controllers.AsyncController.hellos
++ nocsrf
+POST  /company               controllers.AsyncController.createCompany
