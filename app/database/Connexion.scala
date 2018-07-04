@@ -52,6 +52,12 @@ val xa = Transactor.fromDriverManager[IO](
     sql"insert into department (id, dept, emp_id)           values (${de.id}, ${de.dept}, ${de.emp_id})".update.run
     .transact(xa)
 
+  // Select Departement by ID
+  def selectDepartment(id:Int): IO[List[Department]] =
+    sql"select * FROM department WHERE emp_id =$id"
+      .query[Department]
+      .to[List]
+      .transact(xa)
 }
 
 

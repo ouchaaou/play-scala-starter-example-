@@ -78,5 +78,13 @@ class AsyncController @Inject()(cc: ControllerComponents, actorSystem: ActorSyst
     val changedd = Connexion.insertDepartment(dep).unsafeRunSync()
     Ok(changedd.toString)
   }
+
+
+
+  def getDepartmentByCompanyId(id:Int) = Action { request =>
+    val departments =Connexion.selectDepartment(id).unsafeRunSync()
+    Ok(departments.mkString)
+
+  }
 }
 

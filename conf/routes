@@ -18,3 +18,5 @@ GET  /hellos             controllers.AsyncController.hellos
 POST  /company           controllers.AsyncController.createCompany
 + nocsrf
 POST  /dep               controllers.AsyncController.createDepartment
++ nocsrf
+GET  /dep/:id            controllers.AsyncController.getDepartmentByCompanyId(id: Int)
