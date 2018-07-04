@@ -74,6 +74,7 @@ class AsyncController @Inject()(cc: ControllerComponents, actorSystem: ActorSyst
 
   def createDepartment = Action { request =>
     val dep = request.body.asJson.get.as[Department]
+    println(dep)  // juste afficher les vaeurs recu de JSON
     val changedd = Connexion.insertDepartment(dep).unsafeRunSync()
     Ok(changedd.toString)
   }
