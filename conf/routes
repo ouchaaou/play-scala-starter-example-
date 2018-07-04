@@ -12,7 +12,9 @@ GET     /message                    controllers.AsyncController.message
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(file)
 
-GET  /hello               controllers.AsyncController.hello
-GET  /hellos               controllers.AsyncController.hellos
+GET  /hello              controllers.AsyncController.hello
+GET  /hellos             controllers.AsyncController.hellos
 + nocsrf
-POST  /company               controllers.AsyncController.createCompany
+POST  /company           controllers.AsyncController.createCompany
++ nocsrf
+POST  /dep               controllers.AsyncController.createDepartment

@@ -70,5 +70,12 @@ class AsyncController @Inject()(cc: ControllerComponents, actorSystem: ActorSyst
     val changed =  Connexion.insertCompany(companys).unsafeRunSync()
     Ok(changed.toString)
   }
+
+
+  def createDepartment = Action { request =>
+    val dep = request.body.asJson.get.as[Department]
+    val changedd = Connexion.insertDepartment(dep).unsafeRunSync()
+    Ok(changedd.toString)
+  }
 }
 

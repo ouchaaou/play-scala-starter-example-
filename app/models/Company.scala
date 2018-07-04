@@ -5,9 +5,7 @@ import play.api.libs.json._
 import play.api.libs.json.Reads._
 import play.api.libs.functional.syntax._
 
-
 case class Company(id:Int, name:String, age:Int ,addresse: Option[String], salary: Option[Double])
-
 
 object Company{
   implicit val companyReads: Reads[Company] = (
