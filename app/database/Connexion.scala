@@ -8,8 +8,7 @@ import cats.effect.IO
 
 
 
-import models.Company
-import models.Department
+import models._
 
 object Connexion {
 
@@ -26,9 +25,9 @@ val xa = Transactor.fromDriverManager[IO](
 
   def listCompany: IO[List[Company]] = {
       sql"select * from company"
-        .query[Company]
+        .query[(Int,String, Int , Option[String], Option[Double])]
         .to[List]
-        .transact(xa)
+        .transact(xa).map(_.map(data => (Company.apply1 _).tupled(data)))
 
   }
 
@@ -58,6 +57,22 @@ val xa = Transactor.fromDriverManager[IO](
       .query[Department]
       .to[List]
       .transact(xa)
+
+
+  def listCompanyWithlistDepartment:IO[List[Company]] = {
+    listCompany.map(lcompany => lcompany.map(x => {
+      val deps = selectDepartment(x.id).unsafeRunSync()
+      val emp  = selectEmploye(x.id).unsafeRunSync()
+      x.copy(departments = deps,     employeS = emp)
+    }))
+  }
+
+  def selectEmploye(id:Int): IO[List[Employe]] =
+    sql"select * FROM employe WHERE com_id =$id"
+      .query[Employe]
+      .to[List]
+      .transact(xa)
+
 }
 
 

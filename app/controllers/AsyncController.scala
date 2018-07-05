@@ -53,7 +53,7 @@ class AsyncController @Inject()(cc: ControllerComponents, actorSystem: ActorSyst
   //  def count = Action { Ok(counter.nextCount().toString) }
 
   def hello = Action {
-    Ok(Connexion.listCompany.unsafeRunSync().mkString)
+    Ok(Connexion.listCompanyWithlistDepartment.unsafeRunSync().mkString)
   }
 
   def hellos = Action {
@@ -86,5 +86,6 @@ class AsyncController @Inject()(cc: ControllerComponents, actorSystem: ActorSyst
     Ok(departments.mkString)
 
   }
+
 }
 
